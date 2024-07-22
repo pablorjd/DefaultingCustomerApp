@@ -81,4 +81,8 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.comp)
     implementation(libs.androidx.hilt.navigation)
+
+    //Dimens
+
+    implementation(libs.androidx.material3.window.size)
 }
