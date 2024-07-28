@@ -1,6 +1,8 @@
 package dev.pablorjd.listadeudores.ui.home
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,6 +30,10 @@ class HomeViewModel @Inject constructor(
     val items: StateFlow<List<DefaultingCustomerModel>> = _items
 
 
+    private val _showDialog = MutableLiveData<Boolean>()
+    val showDialog: LiveData<Boolean> = _showDialog
+
+
     init {
         fetchItems()
     }
@@ -43,6 +49,7 @@ class HomeViewModel @Inject constructor(
     fun insertDefaultingCustomer(defaultingCustomerModel: DefaultingCustomerModel) {
         Log.i("HomeViewModel", "insertDefaultingCustomer: $defaultingCustomerModel")
         viewModelScope.launch {
+            _showDialog.value = false
             insertDefaultingCustomerUseCase(defaultingCustomerModel)
         }
     }
@@ -52,6 +59,15 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             deleteDefaultingCustomerUseCase(defaultingCustomerModel)
         }
+    }
+
+    fun onShowDialogClick() {
+        _showDialog.value = true
+    }
+
+
+    fun onDialogClose() {
+        _showDialog.value = false
     }
 
 }
