@@ -30,20 +30,22 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
-
-data class Item(val id: Int, val title: String)
+import androidx.hilt.navigation.compose.hiltViewModel
+import dev.pablorjd.listadeudores.domain.model.DefaultingCustomerModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
 
+        val items by viewModel.items.collectAsState()
         Scaffold(
             topBar = {
                 TopAppBar(
@@ -55,7 +57,9 @@ fun HomeScreen() {
                         Text("Lista Deudores App", textAlign = TextAlign.Center)
                     },
                     actions = {
-                        IconButton(onClick = { /*TODO*/ }) {
+                        IconButton(onClick = {
+
+                        }) {
                             Icon(Icons.Default.Search, contentDescription = "Settings")
                         }
                     }
@@ -63,7 +67,9 @@ fun HomeScreen() {
                 )
             },
             floatingActionButton = {
-                FloatingActionButton(onClick = { /*TODO*/ }) {
+                FloatingActionButton(onClick = {  viewModel.insertDefaultingCustomer(
+                    DefaultingCustomerModel( 0,"name", "detail", 1)
+                ) }) {
                     Icon(Icons.Default.Add, contentDescription = "Add")
                 }
             }
@@ -73,14 +79,14 @@ fun HomeScreen() {
                     .padding(innerPadding),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                val items = List(20) { Item(it, "Item #$it") }
+
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(items) { item ->
-                        ItemRow(item)
+                        ItemRow(item, onUpdateTap = {}, onDeleteTap = { viewModel.deleteDefaultingCustomer(item) })
                     }
                 }
             }
@@ -88,7 +94,12 @@ fun HomeScreen() {
 }
 
 @Composable
-fun ItemRow(item: Item) {
+fun ItemRow(
+    item: DefaultingCustomerModel,
+    onUpdateTap: () -> Unit = {},
+    onDeleteTap: (item: DefaultingCustomerModel) -> Unit = {},
+
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -99,8 +110,8 @@ fun ItemRow(item: Item) {
 
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = item.title, style = MaterialTheme.typography.bodyLarge)
-            Text(text = item.title, style = MaterialTheme.typography.titleSmall)
+            Text(text = item.name, style = MaterialTheme.typography.bodyLarge)
+            Text(text = item.detail?: "", style = MaterialTheme.typography.titleSmall)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -110,7 +121,7 @@ fun ItemRow(item: Item) {
                 IconButton(colors = IconButtonDefaults.iconButtonColors(contentColor = Color.Yellow) , onClick = { /*TODO*/ }) {
                     Icon(imageVector = Icons.Filled.Edit, contentDescription = "Settings")
                 }
-                IconButton(colors = IconButtonDefaults.iconButtonColors(contentColor = Color.Red) ,onClick = { /*TODO*/ }) {
+                IconButton(colors = IconButtonDefaults.iconButtonColors(contentColor = Color.Red) ,onClick = { onDeleteTap(item) }) {
                     Icon(imageVector = Icons.Filled.Delete, contentDescription = "Settings")
                 }
             }

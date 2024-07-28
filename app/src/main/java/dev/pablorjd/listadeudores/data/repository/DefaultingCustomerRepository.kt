@@ -13,7 +13,7 @@ class DefaultingCustomerRepository @Inject constructor(private val defaultingCus
 
     val allDefaultingCustomers: Flow<List<DefaultingCustomerModel>> = defaultingCustomerDao.getAllDefaultingCustomer().map { item ->
         item.map {
-            DefaultingCustomerModel(it.id, it.name, it.detail, it.amount)
+            DefaultingCustomerModel(it.id,it.name, it.detail, it.amount)
         }
     }
     suspend fun add(defaultingCustomerModel: DefaultingCustomerModel) {
