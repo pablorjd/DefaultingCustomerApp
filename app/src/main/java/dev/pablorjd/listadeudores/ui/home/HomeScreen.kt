@@ -173,14 +173,16 @@ fun AddTasksDialog(show: Boolean, onDismiss: () -> Unit, viewModel: HomeViewMode
                     value = name,
                     onValueChange = { name = it },
                     singleLine = true,
-                    maxLines = 1
+                    maxLines = 1,
+                    label = { Text("Nombre del Deudor") }
                 )
                 Spacer(modifier = Modifier.size(16.dp))
                 TextField(
                     value = detail,
                     onValueChange = { detail = it },
                     singleLine = true,
-                    maxLines = 1
+                    maxLines = 1,
+                    label = { Text("Descripción de la Deuda") }
                 )
                 Spacer(modifier = Modifier.size(16.dp))
                 TextField(
@@ -188,7 +190,8 @@ fun AddTasksDialog(show: Boolean, onDismiss: () -> Unit, viewModel: HomeViewMode
                     onValueChange = { amount = it },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     singleLine = true,
-                    maxLines = 1
+                    maxLines = 1,
+                    label = { Text("Monto de la Deuda") }
                 )
                 Spacer(modifier = Modifier.size(16.dp))
                 Button(enabled = if (name.isNotEmpty() && detail.isNotEmpty() && (amount.toLongOrNull()
