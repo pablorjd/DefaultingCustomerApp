@@ -10,7 +10,7 @@ import dev.pablorjd.listadeudores.domain.model.DefaultingCustomerModel
 import dev.pablorjd.listadeudores.domain.usecase.DeleteDefaultingCustomerUseCase
 import dev.pablorjd.listadeudores.domain.usecase.GetDefaultingCustomerUseCase
 import dev.pablorjd.listadeudores.domain.usecase.InsertDefaultingCustomerUseCase
-import kotlinx.coroutines.flow.Flow
+import dev.pablorjd.listadeudores.domain.usecase.UpdateDefaultingCustomerUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -20,7 +20,8 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getDefaultingCustomerUseCase: GetDefaultingCustomerUseCase,
     private val insertDefaultingCustomerUseCase: InsertDefaultingCustomerUseCase,
-    private val deleteDefaultingCustomerUseCase: DeleteDefaultingCustomerUseCase
+    private val deleteDefaultingCustomerUseCase: DeleteDefaultingCustomerUseCase,
+    private val updteDefaultingCustomerUseCase: UpdateDefaultingCustomerUseCase
 ) : ViewModel() {
 
     //val defaultingCustomer: Flow<List<DefaultingCustomerModel>> = getDefaultingCustomerUseCase()
@@ -32,6 +33,9 @@ class HomeViewModel @Inject constructor(
 
     private val _showDialog = MutableLiveData<Boolean>()
     val showDialog: LiveData<Boolean> = _showDialog
+
+    private val _showDropDownMenu = MutableLiveData<Boolean>()
+    val showDropDownMenu: LiveData<Boolean> = _showDropDownMenu
 
 
     init {
@@ -60,6 +64,12 @@ class HomeViewModel @Inject constructor(
             deleteDefaultingCustomerUseCase(defaultingCustomerModel)
         }
     }
+    fun updateDefaultingCustomer(defaultingCustomerModel: DefaultingCustomerModel) {
+        Log.i("HomeViewModel", "deleteDefaultingCustomer: $defaultingCustomerModel")
+        viewModelScope.launch {
+            updteDefaultingCustomerUseCase(defaultingCustomerModel)
+        }
+    }
 
     fun onShowDialogClick() {
         _showDialog.value = true
@@ -69,5 +79,4 @@ class HomeViewModel @Inject constructor(
     fun onDialogClose() {
         _showDialog.value = false
     }
-
 }

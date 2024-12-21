@@ -84,6 +84,8 @@ dependencies {
     implementation(libs.androidx.hilt.navigation)
 
     //Dimens
-
     implementation(libs.androidx.material3.window.size)
+
+    //Iconos
+    implementation(libs.androidx.material3.icons)
 }

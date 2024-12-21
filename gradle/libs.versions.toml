@@ -1,20 +1,25 @@
 [versions]
-agp = "8.4.1"
+agp = "8.4.2"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
-lifecycleRuntimeKtx = "2.8.1"
-activityCompose = "1.9.0"
-composeBom = "2023.08.00"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+lifecycleRuntimeKtx = "2.8.6"
+activityCompose = "1.9.3"
+composeBom = "2024.10.00"
 
 version_room = "2.6.1"
 hilt = "2.46"
-hiltAndroid = "2.46"
+hiltAndroid = "2.49"
 hiltAndroidCompiler = "2.46"
 hiltNavigation = "1.2.0"
-runtimeLivedata = "1.6.8"
+runtimeLivedata = "1.7.4"
+
+navigationCompose = "2.8.3"
+kotlinxSerialization = "1.6.3"
+kotlinParcelize = "1.8.10"
+iconsVertion = "1.7.5"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -43,9 +48,20 @@ androidx-hilt-navigation = { module = "androidx.hilt:hilt-navigation-compose", v
 androidx-material3-window-size = { module = "androidx.compose.material3:material3-window-size-class" }
 androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 
+
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+
+#Libreria de iconos
+androidx-material3-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "iconsVertion"}
+
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt"}
+
+jetbrainsKotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize",  version.ref = "kotlinParcelize"  }
 
 
